@@ -59,6 +59,7 @@ jobs:
             work/**/config.log
             work/**/config.mk
             work/zlib-build/Testing/Temporary/LastTest.log
+            work/libdeflate-build/Testing/Temporary/LastTest.log
           if-no-files-found: ignore
           retention-days: 7
       - name: Save tested packages

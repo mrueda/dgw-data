@@ -72,7 +72,7 @@ def package(target):
     arch = {'arm64': 'aarch64', 'AMD64': 'x86_64'}.get(platform.machine(), platform.machine())
     if target != f'{system}-{arch}':
         raise ValueError(f'Native build expected {system}-{arch}, not {target}')
-    name = f'dgw-tools-1.24-1-{target}'
+    name = f'dgw-tools-1.24-2-{target}'
     stage = ROOT / 'work' / name
     (stage / 'bin').mkdir(parents=True, exist_ok=False)
     (stage / 'licenses').mkdir()
@@ -87,7 +87,8 @@ def package(target):
     for label, path in [('bcftools', source / 'LICENSE'),
                         ('htslib', source / 'htslib-1.24' / 'LICENSE'),
                         ('htscodecs', source / 'htslib-1.24' / 'htscodecs' / 'LICENSE.md'),
-                        ('zlib', ROOT / 'work' / 'zlib-1.3.2' / 'LICENSE')]:
+                        ('zlib', ROOT / 'work' / 'zlib-1.3.2' / 'LICENSE'),
+                        ('libdeflate', ROOT / 'work' / 'libdeflate-1.26' / 'COPYING')]:
         shutil.copy2(path, stage / 'licenses' / f'{label}.txt')
     if system == 'windows':
         # Include notices for the static regex/pthread/compiler runtime packages.
@@ -108,7 +109,7 @@ def package(target):
                 'buildConfig': {name: path.read_text() for name, path in [
                     ('bcftools', source / 'config.mk'),
                     ('htslib', source / 'htslib-1.24' / 'config.mk')]},
-                'scope': 'Local VCF/BCF operations; no remote HTSlib access, plugins, bz2/lzma CRAM or libdeflate',
+                'scope': 'Local VCF/BCF operations with static zlib and libdeflate; no remote HTSlib access, plugins or bz2/lzma CRAM',
                 'files': [{'path': str(p.relative_to(stage)).replace('\\', '/'),
                            'sha256': digest(p), 'bytes': p.stat().st_size}
                           for p in sorted(stage.rglob('*')) if p.is_file()]}
