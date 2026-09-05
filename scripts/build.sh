@@ -11,7 +11,7 @@ case "$target" in
   windows-x86_64)
     flags=(-G "MSYS Makefiles")
     export LDFLAGS="-static -static-libgcc"
-    export LIBS="$(pkg-config --static --libs regex)"
+    export LIBS="$(pkg-config --static --libs regex) -liconv"
     ;;
   linux-*) export LDFLAGS="-static-libgcc" ;;
   darwin-*) export MACOSX_DEPLOYMENT_TARGET=13.0 ;;
