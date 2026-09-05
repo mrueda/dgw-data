@@ -53,6 +53,12 @@ before uploading reference, Ensembl or ClinVar data.
 
 ## Release checklist
 
+### Native CI verification (2026-09-05)
+
+- Linux x86-64/ARM64 and macOS Intel/ARM64 passed in [run 33970121334](https://github.com/mrueda/dgw-data/actions/runs/33970121334).
+- Windows x86-64 passed in [run 33970356291](https://github.com/mrueda/dgw-data/actions/runs/33970356291), after fixing static regex dependencies and FASTA fixture line endings.
+- All five targets produced tested archives. These are private, expiring workflow artifacts, not releases. Clean-machine application integration and performance validation remain outstanding.
+
 1. Inspect all native build results and diagnostics.
 2. Test archives on clean machines without compiler environments, including DLL
    availability, code signing/security prompts and scientific result parity.
