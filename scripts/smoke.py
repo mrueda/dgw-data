@@ -12,8 +12,12 @@ def smoke(bin_dir):
     tools = {name: str((Path(bin_dir) / (name + suffix)).resolve())
              for name in ('bcftools', 'bgzip', 'tabix')}
     def run(name, *args, **kwargs):
-        return subprocess.run([tools[name], *map(str, args)], check=True,
-                              stdout=subprocess.PIPE, stderr=subprocess.PIPE, **kwargs).stdout
+        try:
+            return subprocess.run([tools[name], *map(str, args)], check=True,
+                                  stdout=subprocess.PIPE, stderr=subprocess.PIPE, **kwargs).stdout
+        except subprocess.CalledProcessError as error:
+            sys.stderr.write(error.stderr.decode(errors='replace'))
+            raise
     versions = {name: run(name, '--version').decode().splitlines()[0] for name in tools}
     if any('1.24' not in version for version in versions.values()):
         raise AssertionError(versions)
@@ -21,7 +25,7 @@ def smoke(bin_dir):
         root = Path(temporary)
         sequence = 'ATG' + 'GAA' * 8 + 'TAA'
         fasta = root / 'référence.fa'
-        fasta.write_text('>1\n' + sequence + '\n', encoding='utf8')
+        fasta.write_text('>1\n' + sequence + '\n', encoding='utf8', newline='\n')
         Path(str(fasta) + '.fai').write_text(f'1\t30\t3\t30\t31\n')
         vcf = root / 'input.vcf'
         vcf.write_text('##fileformat=VCFv4.2\n##contig=<ID=1,length=30>\n'
