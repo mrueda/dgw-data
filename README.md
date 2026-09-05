@@ -53,10 +53,55 @@ Archive bytes are not claimed to be reproducible across builds.
 
 ## Genome resources
 
-Planned: separate assembly data archives, shared by all operating systems and
-architectures. No genomes or external databases are committed to Git. dbNSFP is
-not used. COSMIC remains user-supplied. Review redistribution terms and attribution
-before uploading reference, Ensembl or ClinVar data.
+Assembly data archives are shared by all operating systems and architectures. No
+genomes or external databases are committed to Git. dbNSFP is not used. COSMIC
+remains user-supplied.
+
+`scripts/package_data.py` creates an immutable assembly archive from a validated
+DGW resource descriptor. The archive uses a fixed layout and contains a manifest
+with the source URL, release, license label, size and SHA-256 for every file. A
+second SHA-256 file is written next to the archive. The builder refuses links,
+missing provenance for primary inputs, and existing output archives; verification
+reads and hashes every archived file without extracting it.
+
+`data-packages.json` is the build authority. It pins the expected input size and
+SHA-256 before packaging, so a changed local database cannot silently become part
+of a release. The first package set contains the reference and indexes, archived
+ClinVar snapshot and index, Ensembl GTF plus DGW gene index, and the Ensembl GFF3
+used by `bcftools csq`. It excludes COSMIC.
+
+Example using an existing development descriptor:
+
+```sh
+python3 scripts/package_data.py build \
+  --bundle /path/to/local-hs37d5.development.json \
+  --output /path/to/release-staging
+python3 scripts/package_data.py verify \
+  /path/to/release-staging/dgw-data-b37-r1.tar.gz
+```
+
+The current local development layout is intentionally not moved: other projects
+may depend on it. A clean working layout on the development volume is:
+
+```text
+Project_DGW/dgw-data/          # this Git repository; no large data
+Databases/dgw/releases/        # immutable archives and .sha256 files
+Databases/dgw/installed/       # clean extraction/integration tests
+```
+
+```sh
+python3 scripts/package_data.py build \
+  --bundle /path/to/dgw-bundle.json \
+  --output dist \
+  --reference-url https://provider.example/reference.fa.gz \
+  --reference-release RELEASE \
+  --reference-license 'Provider terms and citation policy'
+python3 scripts/package_data.py verify dist/dgw-data-b37-r1.tar.gz
+```
+
+Only inputs whose exact checksums and provenance have been reviewed should be
+packaged. Review redistribution terms and attribution before uploading reference,
+Ensembl or ClinVar data. Package creation does not grant redistribution rights.
 
 ## Release checklist
 
@@ -70,7 +115,8 @@ before uploading reference, Ensembl or ClinVar data.
 2. Test archives on clean machines without compiler environments, including DLL
    availability, code signing/security prompts and scientific result parity.
 3. Benchmark against the current DGW toolchain.
-4. Publish reviewed artifacts as release attachments, then update DGW's catalog.
+4. Build and independently verify each assembly archive and its adjacent checksum.
+5. Publish reviewed artifacts as release attachments, then update DGW's catalog.
 
 DGW's resource installer now has checksum-verified tool-archive extraction support.
 The download catalog is still empty: separate data/tool composition, genome archives

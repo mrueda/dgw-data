@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "packages": {
+    "b37": {
+      "revision": "r1",
+      "contigStyle": "no_chr_prefix",
+      "files": {
+        "reference": {"bytes": 892326179, "sha256": "e9157e19a95e01dfc47080b5b6aa559c861de90b9934c2ea7c49cd5ec49e0285", "sourceUrl": "https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz", "release": "hs37d5", "licenseLabel": "See 1000 Genomes Project data-use and citation policy"},
+        "reference-index": {"bytes": 2813, "sha256": "1eab7540d4b62ef0b43b50581d027be37c1ee57da9e9cb75957e750641c8630c", "sourceUrl": "https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz.fai", "release": "hs37d5", "licenseLabel": "See 1000 Genomes Project data-use and citation policy"},
+        "reference-bgzf-index": {"bytes": 778744, "sha256": "b45062b549b0dbc0038613b1823c90dc09e8686f780f23a4d6d2b2b95c44d6e9", "sourceUrl": "https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.fa.gz.gzi", "release": "hs37d5", "licenseLabel": "See 1000 Genomes Project data-use and citation policy"},
+        "clinvar": {"bytes": 149483112, "sha256": "3b5be56b39012627618d44163a599f6dbb95cf0956e97cc833dc39a35ba29454", "sourceUrl": "https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/archive_2.0/2025/clinvar_20250312.vcf.gz", "release": "ClinVar 20250312", "licenseLabel": "See NCBI ClinVar terms and disclaimer"},
+        "clinvar-index": {"bytes": 553957, "sha256": "a8db1c19fb0b21de0b6740064b50a0fd2e5ca247397b52d54941bbc5a9cee0ee", "sourceUrl": "https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/archive_2.0/2025/clinvar_20250312.vcf.gz.tbi", "release": "ClinVar 20250312", "licenseLabel": "See NCBI ClinVar terms and disclaimer"},
+        "genes": {"bytes": 42400095, "sha256": "56bc520f5e9cbc14ab4d03b472355b572818729fa422b905ba62d58291590058", "sourceUrl": "https://ftp.ensembl.org/pub/grch37/release-87/gtf/homo_sapiens/Homo_sapiens.GRCh37.87.gtf.gz", "release": "Ensembl 87", "licenseLabel": "See Ensembl data-use policy"},
+        "gene-index": {"bytes": 10743808, "sha256": "8286d41d9316fcb5ebde3f63a8e139db7ab75e7c809609ca0ba86314399743dc", "sourceUrl": null, "release": "Derived from Ensembl 87 GTF by DGW", "licenseLabel": "See Ensembl data-use policy"},
+        "consequences": {"bytes": 37903989, "sha256": "133dea44279767ede793578219c77b21985fde2cab835fa3492934548125824b", "sourceUrl": "https://ftp.ensembl.org/pub/grch37/release-87/gff3/homo_sapiens/Homo_sapiens.GRCh37.87.gff3.gz", "release": "Ensembl 87", "licenseLabel": "See Ensembl data-use policy"}
+      }
+    },
+    "hg38": {
+      "revision": "r1",
+      "contigStyle": "chr_prefix",
+      "files": {
+        "reference": {"bytes": 1021804486, "sha256": "168ac3d5a670ce001fdeca9df7be0a30705f219c2c0337cc6930df4b210f9ab5", "sourceUrl": "https://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/p12/hg38.p12.fa.gz", "release": "UCSC GRCh38.p12, BGZF-repacked", "licenseLabel": "See UCSC Genome Browser data-use conditions", "uncompressedSourceSha256": "4807df077001ea582d968884358a17ee6f0daa620c2b3afd1f96f0e22ff54137", "transformation": "Recompressed as BGZF for indexed access; uncompressed sequence bytes verified unchanged"},
+        "reference-index": {"bytes": 25606, "sha256": "dd7562ed0e5fd8b7f47472e78b2296046ccc44dcf2710a4cb413e136fba06b50", "sourceUrl": null, "release": "Derived from packaged GRCh38.p12 BGZF", "licenseLabel": "See UCSC Genome Browser data-use conditions"},
+        "reference-bgzf-index": {"bytes": 814344, "sha256": "47ad1dabd589f7f66d6f671d2ef730f42210afdb8b51b9652a56e919cea550c3", "sourceUrl": null, "release": "Derived from packaged GRCh38.p12 BGZF", "licenseLabel": "See UCSC Genome Browser data-use conditions"},
+        "clinvar": {"bytes": 149507564, "sha256": "2f25b1fc54237fb1f883be9a8929aa82092e3474c31e437a72477a895d437b55", "sourceUrl": "https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/archive_2.0/2025/clinvar_20250312.vcf.gz", "release": "ClinVar 20250312", "licenseLabel": "See NCBI ClinVar terms and disclaimer"},
+        "clinvar-index": {"bytes": 553674, "sha256": "350e1cbeaea00c18b7ddeaa9db0bbc01827ea6f173cd1b4edc8c4a14267d2ef1", "sourceUrl": "https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/archive_2.0/2025/clinvar_20250312.vcf.gz.tbi", "release": "ClinVar 20250312", "licenseLabel": "See NCBI ClinVar terms and disclaimer"},
+        "genes": {"bytes": 141121632, "sha256": "ed992f0eac7197d9627bda618f8f831ba355c95bd5d0796af785387d462828b6", "sourceUrl": "https://ftp.ensembl.org/pub/release-116/gtf/homo_sapiens/Homo_sapiens.GRCh38.116.gtf.gz", "release": "Ensembl 116", "licenseLabel": "See Ensembl data-use policy"},
+        "gene-index": {"bytes": 15183872, "sha256": "99cffd70d9290b10af5fe24a4ef47c4a5eb8e17701ba5d6fbdc3c9a957cb9cff", "sourceUrl": null, "release": "Derived from Ensembl 116 GTF by DGW", "licenseLabel": "See Ensembl data-use policy"},
+        "consequences": {"bytes": 108378077, "sha256": "08e881d96ab6385a2c31f063a018be4b2c36860b323f2724be07022deeef21ce", "sourceUrl": "https://ftp.ensembl.org/pub/release-116/gff3/homo_sapiens/Homo_sapiens.GRCh38.116.gff3.gz", "release": "Ensembl 116", "licenseLabel": "See Ensembl data-use policy"}
+      }
+    }
+  }
+}
