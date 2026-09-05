@@ -6,9 +6,9 @@ jobs=${DGW_BUILD_JOBS:-2}
 python3 scripts/package.py prepare
 root=$(pwd)
 prefix="$root/work/deps"
-flags=()
+flags=(-G "Unix Makefiles")
 case "$target" in
-  windows-x86_64) flags=(-DCMAKE_GENERATOR="MSYS Makefiles"); export LDFLAGS="-static -static-libgcc" ;;
+  windows-x86_64) flags=(-G "MSYS Makefiles"); export LDFLAGS="-static -static-libgcc" ;;
   linux-*) export LDFLAGS="-static-libgcc" ;;
   darwin-*) export MACOSX_DEPLOYMENT_TARGET=13.0 ;;
   *) echo "Unsupported platform: $target" >&2; exit 1 ;;
