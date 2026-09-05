@@ -20,8 +20,11 @@ def archive_metadata(path, root, base_url=None):
     if len(fields) != 2 or fields[1] != path.name or fields[0] != digest(path):
         raise ValueError(f'Archive checksum failed: {path}')
     manifest_bytes = None
+    unpacked_bytes = 0
     with tarfile.open(path, 'r:gz') as packed:
         for member in packed:
+            if member.isfile():
+                unpacked_bytes += member.size
             if member.isfile() and member.name.endswith('/manifest.json'):
                 if manifest_bytes is not None:
                     raise ValueError(f'Multiple manifests in {path}')
@@ -39,7 +42,7 @@ def archive_metadata(path, root, base_url=None):
         'bytes': path.stat().st_size,
         'sha256': fields[0],
         'manifestSha256': hashlib.sha256(manifest_bytes).hexdigest(),
-        'unpackedBytes': sum(item['bytes'] for item in manifest['files']),
+        'unpackedBytes': unpacked_bytes,
     }
     for key in ('platform', 'assembly', 'contigStyle'):
         if key in manifest:
