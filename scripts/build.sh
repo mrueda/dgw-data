@@ -8,7 +8,11 @@ root=$(pwd)
 prefix="$root/work/deps"
 flags=(-G "Unix Makefiles")
 case "$target" in
-  windows-x86_64) flags=(-G "MSYS Makefiles"); export LDFLAGS="-static -static-libgcc" ;;
+  windows-x86_64)
+    flags=(-G "MSYS Makefiles")
+    export LDFLAGS="-static -static-libgcc"
+    export LIBS="$(pkg-config --static --libs regex)"
+    ;;
   linux-*) export LDFLAGS="-static-libgcc" ;;
   darwin-*) export MACOSX_DEPLOYMENT_TARGET=13.0 ;;
   *) echo "Unsupported platform: $target" >&2; exit 1 ;;

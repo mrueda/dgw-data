@@ -89,6 +89,12 @@ def package(target):
                         ('htscodecs', source / 'htslib-1.24' / 'htscodecs' / 'LICENSE.md'),
                         ('zlib', ROOT / 'work' / 'zlib-1.3.2' / 'LICENSE')]:
         shutil.copy2(path, stage / 'licenses' / f'{label}.txt')
+    if system == 'windows':
+        # Include notices for the static regex/pthread/compiler runtime packages.
+        license_root = Path(subprocess.check_output(
+            ['cygpath', '-w', '/mingw64/share/licenses'], text=True).strip())
+        shutil.copytree(license_root, stage / 'licenses' / 'mingw-runtime')
+        (stage / 'build-packages.txt').write_text(subprocess.check_output(['pacman', '-Q'], text=True))
     (stage / 'sources.json').write_text(json.dumps(SOURCES, indent=2) + '\n')
     # Test outside the build tree. The package must not rely on its original path.
     with tempfile.TemporaryDirectory(prefix='dgw relocated package ') as temporary:
