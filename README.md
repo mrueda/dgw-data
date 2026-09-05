@@ -36,6 +36,7 @@ The resulting archives are published as release assets only after review.
 - [`BUILDING.md`](BUILDING.md): local and CI build details
 - [`VALIDATION.md`](VALIDATION.md): what has been tested
 - [`RELEASING.md`](RELEASING.md): owner-run publication procedure
+- [`LICENSES.md`](LICENSES.md): repository and packaged-resource license boundary
 
 No workflow publishes on push. Automatic installation in DGW remains disabled
 until reviewed public release URLs are added to its catalog. Users can already
