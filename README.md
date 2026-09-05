@@ -26,7 +26,12 @@ DGW, not these tools. It is not a general-purpose replacement for a full bcftool
 installation. Revision 2 restores libdeflate: the initial package took 9.27 seconds
 for consequence prediction versus 5.15 seconds with the development installation
 on DGW's public exome fixture. A diagnostic build with libdeflate restored matched
-development performance. Revision 2 still requires native CI and package benchmarking.
+development performance. Revision 2 passed all five native targets in
+[run 33972192922](https://github.com/mrueda/dgw-data/actions/runs/33972192922).
+Its Linux ARM64 archive returned identical allele/genotype/consequence rows across
+three public-exome repetitions: median csq 5.43 s versus 5.36 s with the development
+installation; normalization 0.646 s versus 0.666 s. These are workload-specific
+measurements, not cross-platform performance guarantees.
 
 Tests cover strict PASS filtering, multiallelic splitting, indel normalization,
 REF mismatch rejection, BGZF, tabix queries and independently evaluated missense,
@@ -67,8 +72,9 @@ before uploading reference, Ensembl or ClinVar data.
 3. Benchmark against the current DGW toolchain.
 4. Publish reviewed artifacts as release attachments, then update DGW's catalog.
 
-These artifacts are not yet connected to DGW's resource installer. Its current
-catalog format still needs separate data/tool composition and safe archive extraction.
+DGW's resource installer now has checksum-verified tool-archive extraction support.
+The download catalog is still empty: separate data/tool composition, genome archives
+and published resource URLs remain unfinished. No user-facing download is available yet.
 
 ## License
 
