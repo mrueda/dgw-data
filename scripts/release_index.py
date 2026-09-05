@@ -12,7 +12,7 @@ def digest(path):
         return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
-def archive_metadata(path, root, base_url=None):
+def archive_metadata(path, root, base_url=None, flat_base_url=None):
     expected = path.with_suffix(path.suffix + '.sha256')
     if not expected.is_file():
         raise ValueError(f'Missing checksum sidecar: {path}')
@@ -47,7 +47,9 @@ def archive_metadata(path, root, base_url=None):
     for key in ('platform', 'assembly', 'contigStyle'):
         if key in manifest:
             artifact[key] = manifest[key]
-    if base_url:
+    if flat_base_url:
+        artifact['url'] = flat_base_url.rstrip('/') + '/' + quote(path.name)
+    elif base_url:
         artifact['url'] = base_url.rstrip('/') + '/' + '/'.join(quote(part) for part in relative.split('/'))
     return artifact
 
@@ -57,7 +59,10 @@ def main(args):
     archives = sorted(root.rglob('*.tar.gz'))
     if not archives:
         raise ValueError(f'No release archives in {root}')
-    artifacts = [archive_metadata(path, root, args.base_url) for path in archives]
+    artifacts = [
+        archive_metadata(path, root, args.base_url, args.flat_base_url)
+        for path in archives
+    ]
     ids = [item['id'] for item in artifacts]
     if len(ids) != len(set(ids)):
         raise ValueError('Duplicate package IDs')
@@ -73,5 +78,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('directory', type=Path)
     parser.add_argument('--output', type=Path, required=True)
-    parser.add_argument('--base-url')
+    urls = parser.add_mutually_exclusive_group()
+    urls.add_argument('--base-url', help='URL root preserving archive subdirectories')
+    urls.add_argument('--flat-base-url', help='URL root for flat assets such as a GitHub release')
     main(parser.parse_args())

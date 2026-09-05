@@ -37,6 +37,14 @@ class ReleaseIndexTest(unittest.TestCase):
             self.assertEqual(item['url'], 'https://example.org/releases/tools/dgw-tools-test.tar.gz')
             self.assertTrue(output.with_suffix('.json.sha256').is_file())
 
+            subprocess.run([sys.executable, SCRIPT, root, '--output', output,
+                            '--flat-base-url', 'https://example.org/release/download/r1'], check=True)
+            item = json.loads(output.read_text())['artifacts'][0]
+            self.assertEqual(
+                item['url'],
+                'https://example.org/release/download/r1/dgw-tools-test.tar.gz',
+            )
+
 
 if __name__ == '__main__':
     unittest.main()
